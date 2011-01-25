@@ -207,6 +207,7 @@ class CampaignsController < ApplicationController
       lead.user_id = campaign.user_id
       lead.access = campaign.access
       lead.source = "campaign"
+      lead.status = "new"
 
       lead.save
 
