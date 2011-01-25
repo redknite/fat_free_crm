@@ -204,13 +204,20 @@ class CampaignsController < ApplicationController
     lead = Lead.new(params[:lead])
 
     if lead.save
+      lead.user_id = campaign.user_id
       lead.access = campaign.access
+      lead.source = "campaign"
 
       lead.save
-      campaign.leads << lead
 
-      campaign.permissions.each do |permission|
-        lead.permissions.create({:user_id => permission.user_id, :asset => lead})
+      if campaign.access == "Shared"
+        campaign.leads << lead
+
+        campaign.permissions.each do |permission|
+          lead.permissions.create({:user_id => permission.user_id, :asset => lead})
+        end
+
+        lead.save
       end
     end
 
