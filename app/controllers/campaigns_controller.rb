@@ -199,6 +199,22 @@ class CampaignsController < ApplicationController
     render :action => :index
   end
 
+  def leads
+    campaign = Campaign.find(params[:id])
+    lead = Lead.new(params[:lead])
+    if lead.save
+      lead.access = campaign.access
+
+      campaign.permissions.each do |permission|
+        lead.permissions << Permission.new(:user_id => permission.user_id, :asset => lead)
+      end
+
+      campaign.leads << lead
+    end
+
+    redirect_to :back
+  end
+
   private
   #----------------------------------------------------------------------------
   def get_campaigns(options = { :page => nil, :query => nil })
