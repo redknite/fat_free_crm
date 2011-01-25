@@ -222,7 +222,7 @@ class CampaignsController < ApplicationController
       end
     end
 
-    redirect_to :back
+    redirect_to "http://liquidmedia.ca/thanks"
   end
 
   private
