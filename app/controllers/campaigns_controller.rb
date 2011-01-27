@@ -16,7 +16,7 @@
 #------------------------------------------------------------------------------
 
 class CampaignsController < ApplicationController
-  before_filter :require_user
+  before_filter :require_user, :except => [:leads]
   before_filter :get_data_for_sidebar, :only => :index
   before_filter :set_current_tab, :only => [ :index, :show ]
   before_filter :attach, :only => :attach
