@@ -203,6 +203,10 @@ class CampaignsController < ApplicationController
     campaign = Campaign.find(params[:id])
     lead = Lead.new(params[:lead])
 
+    unless params[:lead][:lead_name].present?
+      params[:lead][:last_name] = "Unspecified" 
+    end
+
     if lead.save
       lead.user_id = campaign.user_id
       lead.access = campaign.access
