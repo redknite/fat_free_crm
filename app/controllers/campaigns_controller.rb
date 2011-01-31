@@ -205,6 +205,11 @@ class CampaignsController < ApplicationController
     unless params[:lead][:lead_name].present?
       params[:lead][:last_name] = "Unspecified" 
     end
+
+    unless params[:lead][:first_name].present?
+      params[:lead][:first_name] = "Unspecified" 
+    end
+
     lead = Lead.new(params[:lead])
 
 
