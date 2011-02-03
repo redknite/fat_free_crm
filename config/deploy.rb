@@ -11,7 +11,7 @@ set :use_sudo, false
 
 task :production do
   set :rails_env, 'production'
-  set :deploy_to, "/home/#{user}/applications/crm.liquidmedia.ca/#{rails_env}"
+  set :deploy_to, "/home/#{user}/applications/shindig_crm/#{rails_env}"
   role :app, "69.164.210.244"
   role :web, "69.164.210.244"
   role :db, "69.164.210.244", :primary => true
