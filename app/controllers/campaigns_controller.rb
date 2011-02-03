@@ -16,7 +16,7 @@
 #------------------------------------------------------------------------------
 
 class CampaignsController < ApplicationController
-  before_filter :require_user
+  before_filter :require_user, :except => [:leads]
   before_filter :get_data_for_sidebar, :only => :index
   before_filter :set_current_tab, :only => [ :index, :show ]
   before_filter :attach, :only => :attach
@@ -197,6 +197,32 @@ class CampaignsController < ApplicationController
     session[:filter_by_campaign_status] = params[:status]
     @campaigns = get_campaigns(:page => 1)
     render :action => :index
+  end
+
+  def leads
+    campaign = Campaign.find(params[:id])
+
+    unless params[:lead][:last_name].present?
+      params[:lead][:last_name] = "Unspecified" 
+    end
+
+    unless params[:lead][:first_name].present?
+      params[:lead][:first_name] = "Unspecified" 
+    end
+
+    lead = Lead.new(params[:lead])
+
+
+    if lead.save
+      lead.user_id = campaign.user_id
+      lead.access = "public"
+      lead.source = "campaign"
+      lead.status = "new"
+
+      campaign.leads << lead
+    end
+
+    redirect_to "http://liquidmedia.ca/thanks"
   end
 
   private

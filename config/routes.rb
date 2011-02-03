@@ -47,6 +47,11 @@ ActionController::Routing::Routes.draw do |map|
       }
   end
 
+  map.campaign_leads '/campaigns/:id/leads', 
+    :controller => :campaigns, 
+    :action => :leads, 
+    :conditions => {:method => :post}
+
   map.signup  "signup",  :controller => "users",           :action => "new"
   map.profile "profile", :controller => "users",           :action => "show"
   map.login   "login",   :controller => "authentications", :action => "new"
